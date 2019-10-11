@@ -1,13 +1,17 @@
 import ElementTypes from './elementTypes';
 
 /**
- * Converts a htmlparser2 node to a React element
+ * Converts a node to a React element
  *
- * @param {Object} node The htmlparser2 node to convert
- * @param {Number} index The index of the current node
- * @param {Function} transform Transform function to apply to children of the node
- * @returns {React.Element}
+ * @param {Node} node The node to convert
+ * @param {number} index The index of the current node
+ * @param {((node: Node, index: number) => React.ReactNode)=} transform Transform function to optionally apply to nodes
+ * @returns {React.ReactNode}
  */
 export default function convertNodeToElement(node, index, transform) {
-  return ElementTypes[node.type](node, index, transform);
+  /**
+   * @type {any}
+   */
+  const n = node;
+  return ElementTypes(node)(n, index, transform);
 }

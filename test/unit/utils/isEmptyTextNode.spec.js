@@ -1,32 +1,32 @@
-import isEmptyTextNode from 'utils/isEmptyTextNode';
+import isEmptyTextNode from '../../../src/utils/isEmptyTextNode';
 
 describe('Testing `utils/isEmptyTextNode`', () => {
-
   it('should return true for text nodes that contain a line break', () => {
-
-    const nodes = [
-      { type: 'text', data:'\n' },
-      { type: 'text', data:'   \n' },
-      { type: 'text', data:'\n   ' },
-      { type: 'text', data:'    \n   ' },
-      { type: 'text', data:'\r\n' },
-      { type: 'text', data:'   \r\n' },
-      { type: 'text', data:'\r\n   ' },
-      { type: 'text', data:'    \r\n   ' }
+    const texts = [
+      '\n',
+      '   \n',
+      '\n   ',
+      '    \n   ',
+      '\r\n',
+      '   \r\n',
+      '\r\n   ',
+      '    \r\n   '
     ];
-
-    nodes.forEach(node => {
-      expect(isEmptyTextNode(node)).toBe(true);
+    texts.forEach(text => {
+      const node = document.createElement('div');
+      node.innerHTML = text;
+      expect(Array.from(node.childNodes).every(isEmptyTextNode)).toBe(true);
     });
-
   });
 
   it('should return false for text nodes not containing a line break', () => {
-    expect(isEmptyTextNode({ type:'text', data: '' })).toBe(false);
+    const node = document.createElement('div');
+    node.innerText = ' ';
+    expect(isEmptyTextNode(node.firstChild)).toBe(false);
   });
 
   it('should return false for non text nodes', () => {
-    expect(isEmptyTextNode({ type:'tag' })).toBe(false);
+    const node = document.createElement('div');
+    expect(isEmptyTextNode(node)).toBe(false);
   });
-
 });
