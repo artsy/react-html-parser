@@ -7,14 +7,13 @@ import isValidTagOrAttributeName from '../utils/isValidTagOrAttributeName';
 /**
  * Converts any element (excluding style - see StyleElementType - and script) to a react element.
  *
- * @param {Object} node The tag node
- * @param {String} index The index of the React element relative to it's parent
- * @param {Function} transform The transform function to apply to all children
- * @returns {React.Element} The React tag element
+ * @param {Element} node The tag node
+ * @param {number} index The index of the React element relative to it's parent
+ * @param {((node: Node, index: number) => React.ReactNode)=} transform Transform function to optionally apply to nodes
+ * @returns {React.ReactNode} The React tag element
  */
 export default function TagElementType(node, index, transform) {
-
-  const tagName = node.name;
+  const tagName = node.tagName.toLowerCase();
 
   // validate tag name
   if (!isValidTagOrAttributeName(tagName)) {
@@ -22,12 +21,12 @@ export default function TagElementType(node, index, transform) {
   }
 
   // generate props
-  const props = generatePropsFromAttributes(node.attribs, index);
+  const props = generatePropsFromAttributes(node.attributes, index);
 
   // If the node is not a void element and has children then process them
   let children = null;
   if (VoidElements.indexOf(tagName) === -1) {
-    children = processNodes(node.children, transform);
+    children = processNodes(node.childNodes, transform);
   }
 
   // create and return the element

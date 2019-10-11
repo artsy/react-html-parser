@@ -4,20 +4,30 @@
  * value
  */
 
-import { ElementType } from 'htmlparser2';
-
 import TextElementType from './TextElementType';
 import TagElementType from './TagElementType';
 import StyleElementType from './StyleElementType';
 import UnsupportedElementType from './UnsupportedElementType';
 
-export default {
-  [ElementType.Text]: TextElementType,
-  [ElementType.Tag]: TagElementType,
-  [ElementType.Style]: StyleElementType,
-  [ElementType.Directive]: UnsupportedElementType,
-  [ElementType.Comment]: UnsupportedElementType,
-  [ElementType.Script]: UnsupportedElementType,
-  [ElementType.CDATA]: UnsupportedElementType,
-  [ElementType.Doctype]: UnsupportedElementType
+const CONSTANTS = {
+  [Node.TEXT_NODE]: TextElementType,
+  [Node.ELEMENT_NODE]: TagElementType,
+  // [ElementType.Directive]: UnsupportedElementType,
+  [Node.COMMENT_NODE]: UnsupportedElementType,
+  [Node.CDATA_SECTION_NODE]: UnsupportedElementType,
+  [Node.DOCUMENT_TYPE_NODE]: UnsupportedElementType
+};
+
+/**
+ * @param {Node} node
+ */
+export default node => {
+  if (node.nodeName === 'SCRIPT') {
+    return UnsupportedElementType;
+  }
+  if (node.nodeName === 'STYLE') {
+    return StyleElementType;
+  } else {
+    return CONSTANTS[node.nodeType] || UnsupportedElementType;
+  }
 };
