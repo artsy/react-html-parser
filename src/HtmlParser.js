@@ -44,7 +44,6 @@ import processNodes from './processNodes';
  */
 export default function HtmlParser(html, options = {}) {
   const {
-    // decodeEntities = true,
     transform,
     // prettier-ignore
     preprocessNodes =
@@ -58,6 +57,5 @@ export default function HtmlParser(html, options = {}) {
   const doc = parser.parseFromString(html, 'text/html');
   const nodes = doc.body.childNodes;
 
-  // const nodes = preprocessNodes(htmlparser2.parseDOM(html, { decodeEntities }));
   return processNodes(preprocessNodes(nodes), transform);
 }

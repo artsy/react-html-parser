@@ -34,8 +34,7 @@
   "keywords": [
     "react",
     "html",
-    "htmlparser",
-    "htmlparser2",
+    "DOMParser",
     "inner html",
     "dangerouslySetInnerHTML"
   ],

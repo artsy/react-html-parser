@@ -101,13 +101,6 @@ describe('Integration tests: ', () => {
     test('<span>&excl;</span>', '<span>!</span>');
   });
 
-  // TODO
-  xit('should not decode html entities when the option is disabled', () => {
-    test('<span>&excl;</span>', '<span>&amp;excl;</span>', {
-      decodeEntities: false
-    });
-  });
-
   describe('transform function', () => {
     it('should use the response when it is not undefined', () => {
       test(
@@ -131,20 +124,6 @@ describe('Integration tests: ', () => {
             if (node.nodeName === 'SPAN') {
               return null;
             }
-          }
-        }
-      );
-    });
-
-    // TODO
-    xit('should allow modifying nodes', () => {
-      test(
-        '<a href="/test">test link</a>',
-        '<a href="/changed">test link</a>',
-        {
-          transform(node, index) {
-            node.attribs.href = '/changed';
-            return convertNodeToElement(node, index);
           }
         }
       );
