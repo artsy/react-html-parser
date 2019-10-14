@@ -9,15 +9,6 @@ import TagElementType from './TagElementType';
 import StyleElementType from './StyleElementType';
 import UnsupportedElementType from './UnsupportedElementType';
 
-const CONSTANTS = {
-  [Node.TEXT_NODE]: TextElementType,
-  [Node.ELEMENT_NODE]: TagElementType,
-  // [ElementType.Directive]: UnsupportedElementType,
-  [Node.COMMENT_NODE]: UnsupportedElementType,
-  [Node.CDATA_SECTION_NODE]: UnsupportedElementType,
-  [Node.DOCUMENT_TYPE_NODE]: UnsupportedElementType
-};
-
 /**
  * @param {Node} node
  */
@@ -27,7 +18,13 @@ export default node => {
   }
   if (node.nodeName === 'STYLE') {
     return StyleElementType;
-  } else {
-    return CONSTANTS[node.nodeType] || UnsupportedElementType;
+  }
+  switch (node.nodeType) {
+    case Node.TEXT_NODE:
+      return TextElementType;
+    case Node.ELEMENT_NODE:
+      return TagElementType;
+    default:
+      return UnsupportedElementType;
   }
 };
