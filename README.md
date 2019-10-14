@@ -1,7 +1,9 @@
 # React HTML Parser
 
 _NOTE: This Artsy fork replaces the htmlparser2 dependency with the `DOMParser` API provided by modern browsers. As such,
-the nodes that you get to operate on have a slightly different API._
+the nodes that you get to operate on have a slightly different API. This also means that out-of-the-box this code only
+works in browser environments. If needed, a different environment can polyfill the `DOMParser` and `Node` API, as shown
+[here](https://github.com/artsy/reaction/blob/0be2c23baea8c51dca588f9543c7f22c26f2faaa/src/Polyfills/DOMParser.ts)_
 
 A utility for converting HTML strings into [React](https://facebook.github.io/react/) components. Avoids the use of dangerouslySetInnerHTML and converts standard HTML elements, attributes and inline styles into their React equivalents.
 
